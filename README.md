@@ -11,4 +11,7 @@ popularity handle: 处理所有存储于数据库中的预订事件，分析事�
 
 Order Service: 通过酒店预订服务生成订单，由独立的订单服务管理。
 
-按照教程中的步骤一次一点地构建功能，然后尝试运行它。
+按照教程中的步骤一次一点地构建功能，然后尝试运行它，我们将此服务分为了三部分，请通过不同分支查看：
+- 酒店预订服务-[part-1](https://github.com/PhoenixIQ/hotel-booking/tree/part-1)
+- 流行度分析-[part-2](https://github.com/PhoenixIQ/hotel-booking/tree/part-2)
+- 订单微服务-[part-3](https://github.com/PhoenixIQ/hotel-booking/tree/part-3)
