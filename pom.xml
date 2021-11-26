@@ -27,6 +27,21 @@
         <proto.version>3.4.0</proto.version>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.iquantex</groupId>
+                <artifactId>phoenix-server-starter</artifactId>
+                <version>${phoenix.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.iquantex</groupId>
+                <artifactId>phoenix-client-starter</artifactId>
+                <version>${phoenix.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <build>
         <plugins>
             <!--编译插件-->
