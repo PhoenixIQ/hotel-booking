@@ -1,5 +1,6 @@
 package com.iquantex.phoenix.hotel.model;
 
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +23,7 @@ import java.io.Serializable;
 public class BookingStore implements Serializable {
 
 	@Id
-	private String roomType;
+	private RoomType roomType;
 
 	private int bookingsCount;
 

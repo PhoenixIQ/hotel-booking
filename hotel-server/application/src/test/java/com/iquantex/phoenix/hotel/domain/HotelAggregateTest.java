@@ -1,5 +1,6 @@
 package com.iquantex.phoenix.hotel.domain;
 
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.message.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.message.HotelCancelFailEvent;
 import com.iquantex.phoenix.hotel.message.HotelCreateCmd;
@@ -29,9 +30,10 @@ public class HotelAggregateTest {
 	@Test
 	public void test_bookings() {
 		EntityAggregateFixture fixture = getFixture();
-		HotelCreateCmd hotelCreateCmd = new HotelCreateCmd("hotel-1", "1", "1@" + UUID.randomUUID().toString());
+		HotelCreateCmd hotelCreateCmd = new HotelCreateCmd("iHome", RoomType.DOUBLE,
+				"1@" + UUID.randomUUID().toString());
 		fixture.when(hotelCreateCmd).printIdentify().expectMessage(HotelCreateEvent.class);
-		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "hotel-1");
+		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "iHome");
 		Assert.assertNotNull(hotelAggregate.getRestRoom());
 	}
 
@@ -41,8 +43,8 @@ public class HotelAggregateTest {
 	@Test
 	public void test_queryRestRoom() {
 		EntityAggregateFixture fixture = getFixture();
-		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "hotel-1");
-		HotelQueryCmd hotelQueryCmd = new HotelQueryCmd("hotel-1");
+		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "iHome");
+		HotelQueryCmd hotelQueryCmd = new HotelQueryCmd("iHome");
 		ActReturn act = hotelAggregate.act(hotelQueryCmd);
 		Assert.assertEquals(act.getEvent().getClass(), HotelQueryEvent.class);
 	}
@@ -53,8 +55,8 @@ public class HotelAggregateTest {
 	@Test
 	public void test_cancel() {
 		EntityAggregateFixture fixture = getFixture();
-		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "hotel-1");
-		HotelCancelCmd hotelCancelCmd = new HotelCancelCmd("hotel-1", "1@" + UUID.randomUUID().toString());
+		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "iHome");
+		HotelCancelCmd hotelCancelCmd = new HotelCancelCmd("iHome", "1@" + UUID.randomUUID().toString());
 		ActReturn act = hotelAggregate.act(hotelCancelCmd);
 		Assert.assertEquals(act.getEvent().getClass(), HotelCancelFailEvent.class);
 	}

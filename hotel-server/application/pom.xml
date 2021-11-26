@@ -18,6 +18,11 @@
             <artifactId>core-api</artifactId>
             <version>${revision}</version>
         </dependency>
+        <dependency>
+            <groupId>com.iquantex.phoenix</groupId>
+            <artifactId>order-service</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- spring-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
