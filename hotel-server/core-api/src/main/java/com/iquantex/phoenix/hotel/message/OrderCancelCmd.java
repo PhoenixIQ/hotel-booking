@@ -1,7 +1,7 @@
 package com.iquantex.phoenix.hotel.message;
 
-import com.iquantex.phoenix.hotel.enumType.RoomType;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 
 import java.io.Serializable;
@@ -10,14 +10,13 @@ import java.io.Serializable;
  * @author quail
  */
 @Getter
+@Builder
 @AllArgsConstructor
-public class HotelCreateCmd implements Serializable {
+public class OrderCancelCmd implements Serializable {
 
-	private static final long serialVersionUID = 719772692097810576L;
+	private static final long serialVersionUID = 4708990945046294579L;
 
 	private String hotelCode;
-
-	private RoomType roomType;
 
 	private String subNumber;
 

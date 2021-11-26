@@ -1,11 +1,14 @@
 package com.iquantex.phoenix.hotel.repository;
 
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.model.BookingStore;
 import org.springframework.data.repository.CrudRepository;
+
+import java.util.List;
 
 /**
  * @author quail
  */
-public interface BookingsStoreRepository extends CrudRepository<BookingStore, String> {
+public interface BookingsStoreRepository extends CrudRepository<BookingStore, RoomType> {
 
 }

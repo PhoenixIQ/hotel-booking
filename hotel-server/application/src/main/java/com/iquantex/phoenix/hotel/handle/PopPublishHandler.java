@@ -6,10 +6,12 @@ import com.iquantex.phoenix.eventpublish.core.CommittableEventBatchWrapper;
 import com.iquantex.phoenix.eventpublish.core.EventDeserializer;
 import com.iquantex.phoenix.eventpublish.core.EventHandler;
 import com.iquantex.phoenix.eventpublish.deserializer.DefaultMessageDeserializer;
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.message.HotelCancelEvent;
 import com.iquantex.phoenix.hotel.message.HotelCreateEvent;
 import com.iquantex.phoenix.hotel.model.BookingStore;
 import com.iquantex.phoenix.hotel.repository.BookingsStoreRepository;
+import com.iquantex.phoenix.hotel.utils.ConvertUtil;
 import com.iquantex.phoenix.server.eventstore.EventStoreRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -42,7 +44,7 @@ public class PopPublishHandler implements EventHandler<Phoenix.Message, Phoenix.
 		while (iterator.hasNext()) {
 			Message message = deserializer.deserialize(iterator.next().getContent().toByteArray());
 			if (message.getPayload() instanceof HotelCreateEvent) {
-				String roomType = ((HotelCreateEvent) message.getPayload()).getRestType();
+				RoomType roomType = ((HotelCreateEvent) message.getPayload()).getRoomType();
 				try {
 					BookingStore bookingStore = repository.findById(roomType).get();
 					repository.save(BookingStore.builder().roomType(roomType)
@@ -55,12 +57,12 @@ public class PopPublishHandler implements EventHandler<Phoenix.Message, Phoenix.
 			}
 			else if (message.getPayload() instanceof HotelCancelEvent) {
 				String roomType = ((HotelCancelEvent) message.getPayload()).getSubNumber().split("@")[0];
-				BookingStore bookingStore = repository.findById(roomType).get();
+				BookingStore bookingStore = repository.findById(ConvertUtil.num2Enum(roomType)).get();
 				if (bookingStore.getBookingsCount() == 1) {
 					repository.delete(bookingStore);
 				}
 				else {
-					repository.save(BookingStore.builder().roomType(roomType)
+					repository.save(BookingStore.builder().roomType(ConvertUtil.num2Enum(roomType))
 							.bookingsCount(bookingStore.getBookingsCount() - 1).build());
 				}
 			}
