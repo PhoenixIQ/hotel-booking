@@ -17,7 +17,16 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <!--phoenix-->
+        <dependency>
+            <groupId>com.iquantex</groupId>
+            <artifactId>phoenix-event-publish-starter</artifactId>
+            <version>${phoenix.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.iquantex</groupId>
             <artifactId>phoenix-client-starter</artifactId>

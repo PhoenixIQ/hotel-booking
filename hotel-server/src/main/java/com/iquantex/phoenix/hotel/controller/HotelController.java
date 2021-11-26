@@ -12,6 +12,7 @@ import com.iquantex.phoenix.hotel.protocol.HotelCreateEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCreateFailEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelQueryCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelQueryEvent;
+import com.iquantex.phoenix.hotel.repository.BookingsStoreRepository;
 import com.iquantex.phoenix.hotel.utils.ConvertUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
@@ -35,6 +38,9 @@ public class HotelController {
 
 	@Autowired
 	private PhoenixClient client;
+
+	@Autowired
+	private BookingsStoreRepository repository;
 
 	@PutMapping("/bookings/{hotelCode}/{roomType}")
 	public String bookings(@PathVariable String hotelCode, @PathVariable String roomType) {
@@ -80,6 +86,19 @@ public class HotelController {
 		}
 		catch (InterruptedException | ExecutionException | TimeoutException e) {
 			return "rpc error: " + e.getMessage();
+		}
+	}
+
+	@GetMapping("/queryPop")
+	public String queryRestRoom() {
+		try {
+			Map<String, Integer> map = new HashMap<>();
+			repository.findAll()
+					.forEach(bookingStore -> map.put(bookingStore.getRoomType(), bookingStore.getBookingsCount()));
+			return new ObjectMapper().writeValueAsString(ConvertUtil.Map2Map(ConvertUtil.sortMap(map)));
+		}
+		catch (JsonProcessingException e) {
+			return "query fail: " + e.getMessage();
 		}
 	}
 
