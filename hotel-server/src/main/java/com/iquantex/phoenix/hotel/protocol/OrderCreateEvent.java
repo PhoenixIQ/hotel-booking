@@ -9,11 +9,11 @@ import java.io.Serializable;
 /**
  * @author quail
  */
-@Getter
 @AllArgsConstructor
-public class HotelCreateEvent implements Serializable {
+@Getter
+public class OrderCreateEvent implements Serializable {
 
-	private static final long serialVersionUID = -2347396853431433998L;
+	private static final long serialVersionUID = -1666190644126020224L;
 
 	private String hotelCode;
 

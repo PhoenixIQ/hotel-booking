@@ -36,3 +36,7 @@ quantex:
           - url: jdbc:h2:file:~/data/hotelbooking;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS PUBLIC # 数据库链接url
             username: sa                  # 数据库账户
             password:                     # 数据库密码
+    event-publish:
+      event-task:
+        enabled: true
+        topic: hotel-event-pub
