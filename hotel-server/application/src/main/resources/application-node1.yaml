@@ -1,0 +1,54 @@
+spring:
+  application:
+    name: hotel-bookings # 自定义服务名称
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/bookings?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF8&allowPublicKeyRetrieval=true&useSSL=false
+    username: root
+    password: PHOENIX_EXMAPLE
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    show-sql: false
+  profiles:
+    active: node1
+
+## 关闭内存kafka
+embedded-kafka: false
+
+quantex:
+  phoenix:
+    akka:
+      seed-node: akka://bookings@127.0.0.1:2551,akka://bookings@127.0.0.1:2552
+      arteryCanonicalHostname: 127.0.0.1
+      artery-canonical-port: 2551
+      management-http-port: 8558
+    client:
+      name: ${spring.application.name}-client   # 服务名称
+      mq:
+        type: kafka                             # mq类型
+        address: 127.0.0.1:9092                 # mq地址
+    server:
+      name: ${spring.application.name}    # 服务名称
+      package-name: com.iquantex.phoenix.hotel.domain   # 聚合根包所在路径
+      default-serializer: proto_stuff     #序列化模式
+      mq:
+        type: kafka                       # mq类型
+        address: 127.0.0.1:9092           # mq服务地址
+        subscribe:
+          - topic: hotel-bookings
+      event-store:
+        driver-class-name: com.mysql.jdbc.Driver
+        data-sources:
+          - url: jdbc:mysql://localhost:3306/bookings?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF8&allowPublicKeyRetrieval=true&useSSL=false
+            username: root
+            password: PHOENIX_EXMAPLE
+    event-publish:
+      event-task:
+        enabled: true
+        topic: hotel-event-pub
+server:
+  port: 8080
