@@ -36,6 +36,7 @@ quantex:
           - url: jdbc:h2:file:./data/test;DB_CLOSE_DELAY=-1;DATABASE_TO_UPPER=FALSE;INIT=CREATE SCHEMA IF NOT EXISTS PUBLIC # 数据库链接url
             username: sa                  # 数据库账户
             password:                     # 数据库密码
+      license: D3Wvxv2ot70zuPwmbndPmFmIWrvCRDtkWX5wCw3e5fflbQe6jcL1HrAtqmZbe6X12uFzi+VbXyi2cx9eMYhExN86pYIBy4zhh9khoSJVchiGuZs56FoM+W2Tu83H6cyjusHpdxscaVnz/QJaedd29QwX9nu+akYXUK3BLb48DgiKUdI658E1mj9sPLHgqqzETY9aiYXq3enqvhUr9g+sce7W8SHiJ4g3cDPG2Rf8WkUCLXj3gs9e55GphU584TiNl7EeSWc0M6BTA67G1NqYPchgVW1LBEdrpjGy3JPbq0swDjri1vY5oWwua8SUbz+LAy7PvGS1raGxX2GFokjyynKtGmi74+MxijOSeNrsaua5nIR19mLmXbTO5t2Wqtyiesp00fpvL8bPRq+hILaIhoLUZW7UQ5iB004mTdiZ1ZegRKNzK4N/BmlpsvAGDv+Ysn/ly9FPS0vDPvBI9Zp6ibrGX6UPS3aqOFTXlzd45IY6eIyBwWrxLxArg4CyKa75kTBnlwQWABYMLaXlqfh17MUVIH/yhafiH2+czQwtybetKM8HIt6xMAxbJ3avCPPXHmjzuJAwN+fjDS7LQDP2hjL9e8JtdX9FBvUIN2kktL+AmBNatubLnCdP4LPyPX3RE62nbTrEm8227pQ93WC7iwLtYEV5mLs0zf//DJV6FYx1hRBm8uwZxIb9Kyfh02SQH0yE1i7FGZ23jDhhzBj6Lw7YdsY2QRmuClk6UNbmilLOgKXw3BGHZ5a/IHvWHo+P1B0vKZjQvnPk5tzilQdkH48Qmqq0VNGX3LeJiMWWWpnDkMJGE86z6mkEH4cLyctlmO/OIxrxe+yOLd9HBKMBMw==
     event-publish:
       event-task:
         enabled: true
