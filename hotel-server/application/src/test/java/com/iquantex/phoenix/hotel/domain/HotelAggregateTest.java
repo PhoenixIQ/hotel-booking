@@ -1,14 +1,13 @@
 package com.iquantex.phoenix.hotel.domain;
 
 import com.iquantex.phoenix.hotel.message.HotelCancelCmd;
-import com.iquantex.phoenix.hotel.message.HotelCancelEvent;
 import com.iquantex.phoenix.hotel.message.HotelCancelFailEvent;
 import com.iquantex.phoenix.hotel.message.HotelCreateCmd;
 import com.iquantex.phoenix.hotel.message.HotelCreateEvent;
 import com.iquantex.phoenix.hotel.message.HotelQueryCmd;
 import com.iquantex.phoenix.hotel.message.HotelQueryEvent;
 import com.iquantex.phoenix.server.aggregate.ActReturn;
-import com.iquantex.phoenix.server.test.EntityAggregateFixture;
+import com.iquantex.phoenix.server.testkit.EntityAggregateFixture;
 import org.junit.Assert;
 import org.junit.Test;
 
