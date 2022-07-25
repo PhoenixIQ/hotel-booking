@@ -1,5 +1,6 @@
 package com.iquantex.phoenix.hotel.domain;
 
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelFailEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCreateCmd;
@@ -29,7 +30,8 @@ public class HotelAggregateTest {
 	@Test
 	public void test_bookings() {
 		EntityAggregateFixture fixture = getFixture();
-		HotelCreateCmd hotelCreateCmd = new HotelCreateCmd("hotel-1", "1", "1@" + UUID.randomUUID().toString());
+		HotelCreateCmd hotelCreateCmd = new HotelCreateCmd("hotel-1", RoomType.apply("1"),
+				"1@" + UUID.randomUUID().toString());
 		fixture.when(hotelCreateCmd).printIdentify().expectMessage(HotelCreateEvent.class);
 		HotelAggregate hotelAggregate = fixture.getAggregateRoot(HotelAggregate.class, "hotel-1");
 		Assert.assertNotNull(hotelAggregate.getRestRoom());

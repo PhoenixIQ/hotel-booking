@@ -1,5 +1,6 @@
 package com.iquantex.phoenix.hotel.model;
 
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -27,7 +27,7 @@ import java.util.Properties;
  * @author quail
  */
 @Configuration
-@ConditionalOnProperty(value = "quantex.phoenix.event-publish.event-task.enabled", havingValue = "true")
+@ConditionalOnProperty(value = "subscribe.topic")
 public class EventPublishTopicSubscribeConfig {
 
 	@Value("${spring.application.name}")
@@ -36,7 +36,7 @@ public class EventPublishTopicSubscribeConfig {
 	@Value("${quantex.phoenix.server.mq.address}")
 	private String mqAddress;
 
-	@Value("${quantex.phoenix.event-publish.event-task.topic}")
+	@Value("${subscribe.topic}")
 	private String subscribeTopic;
 
 	private EventDeserializer<byte[], Message> deserializer = new DefaultMessageDeserializer();

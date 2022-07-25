@@ -6,6 +6,7 @@ import com.iquantex.phoenix.eventpublish.core.CommittableEventBatchWrapper;
 import com.iquantex.phoenix.eventpublish.core.EventDeserializer;
 import com.iquantex.phoenix.eventpublish.core.EventHandler;
 import com.iquantex.phoenix.eventpublish.deserializer.DefaultMessageDeserializer;
+import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.model.BookingStore;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCreateEvent;
@@ -42,15 +43,15 @@ public class PopPublishHandler implements EventHandler<Phoenix.Message, Phoenix.
 		while (iterator.hasNext()) {
 			Message message = deserializer.deserialize(iterator.next().getContent().toByteArray());
 			if (message.getPayload() instanceof HotelCreateEvent) {
-				String roomType = ((HotelCreateEvent) message.getPayload()).getRestType();
+				RoomType roomType = ((HotelCreateEvent) message.getPayload()).getRoomType();
 				try {
-					BookingStore bookingStore = repository.findById(roomType).get();
-					repository.save(BookingStore.builder().roomType(roomType)
+					BookingStore bookingStore = repository.findById(roomType.getCode()).get();
+					repository.save(BookingStore.builder().roomType(roomType.getCode())
 							.bookingsCount(bookingStore.getBookingsCount() + 1).build());
 				}
 				catch (NoSuchElementException e) {
 					// 获取不到数据时，get()抛出异常
-					repository.save(BookingStore.builder().roomType(roomType).bookingsCount(1).build());
+					repository.save(BookingStore.builder().roomType(roomType.getCode()).bookingsCount(1).build());
 				}
 			}
 			else if (message.getPayload() instanceof HotelCancelEvent) {
