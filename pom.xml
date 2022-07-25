@@ -22,7 +22,7 @@
 
     <properties>
         <revision>1.0-SNAPSHOT</revision>
-        <phoenix.version>2.4.0</phoenix.version>
+        <phoenix.version>2.5.4</phoenix.version>
         <lombook.version>1.16.20</lombook.version>
         <proto.version>3.4.0</proto.version>
     </properties>
@@ -41,9 +41,14 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
+                <version>2.2.6.RELEASE</version>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!--代码格式化插件-->
             <plugin>
