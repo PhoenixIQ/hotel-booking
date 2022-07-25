@@ -5,7 +5,7 @@ import com.iquantex.phoenix.hotel.message.OrderCancelCmd;
 import com.iquantex.phoenix.hotel.message.OrderCreateCmd;
 import com.iquantex.phoenix.hotel.message.OrderQueryAllCmd;
 import com.iquantex.phoenix.hotel.message.OrderQueryByCmd;
-import com.iquantex.phoenix.server.test.EntityAggregateFixture;
+import com.iquantex.phoenix.server.testkit.EntityAggregateFixture;
 import org.junit.Before;
 import org.junit.Test;
 
