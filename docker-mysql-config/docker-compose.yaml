@@ -37,3 +37,8 @@ services:
       - kafka_data:/kafka
     depends_on:
       - zookeeper
+
+volumes:
+  mysql_data:
+  zookeeper_data:
+  kafka_data:
