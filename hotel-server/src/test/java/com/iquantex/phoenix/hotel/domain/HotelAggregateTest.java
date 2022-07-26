@@ -1,6 +1,5 @@
 package com.iquantex.phoenix.hotel.domain;
 
-
 import com.iquantex.phoenix.hotel.protocol.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelFailEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCreateCmd;

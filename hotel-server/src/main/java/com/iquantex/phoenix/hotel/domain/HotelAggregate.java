@@ -1,7 +1,5 @@
 package com.iquantex.phoenix.hotel.domain;
 
-
-
 import com.iquantex.phoenix.core.message.RetCode;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelEvent;
