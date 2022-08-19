@@ -32,7 +32,7 @@ public class PopPublishHandler implements EventHandler<Phoenix.Message, Phoenix.
 
 	@Override
 	public String getInfo() {
-		return null;
+		return "PopPublish";
 	}
 
 	@Override
