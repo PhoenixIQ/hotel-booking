@@ -1,6 +1,5 @@
 package com.iquantex.phoenix.hotel.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.kafka.test.rule.KafkaEmbedded;
@@ -13,7 +12,6 @@ import java.util.Map;
  * @Date: 2020/8/20 12:15
  */
 @Configuration
-@ConditionalOnProperty(name = "embedded.kafka.enable", havingValue = "true")
 public class KafkaEmbeddedConfiguration {
 
 	/**

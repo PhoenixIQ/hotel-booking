@@ -1,7 +1,6 @@
 package com.iquantex.phoenix.hotel.domain;
 
 import com.iquantex.phoenix.core.message.RetCode;
-import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelFailEvent;
@@ -10,7 +9,6 @@ import com.iquantex.phoenix.hotel.protocol.HotelCreateEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCreateFailEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelQueryCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelQueryEvent;
-import com.iquantex.phoenix.hotel.utils.ConvertUtil;
 import com.iquantex.phoenix.server.aggregate.ActReturn;
 import com.iquantex.phoenix.server.aggregate.CommandHandler;
 import com.iquantex.phoenix.server.aggregate.EntityAggregateAnnotation;
@@ -40,16 +38,16 @@ public class HotelAggregate implements Serializable {
 	 * 剩余房间<type,number> 房间类型: 1. 大床房 2. 标准间 3. 情侣套房 4. 总统套房
 	 */
 	@Getter
-	private Map<RoomType, Integer> restRoom = new HashMap<>();
+	private Map<String, Integer> restRoom = new HashMap<>();
 
 	/**
 	 * 假定各类房间剩余10间
 	 */
 	public HotelAggregate() {
-		restRoom.put(RoomType.DOUBLE, 10);
-		restRoom.put(RoomType.STANDARD, 10);
-		restRoom.put(RoomType.COUPLES, 10);
-		restRoom.put(RoomType.LUXURIOUS, 10);
+		restRoom.put("1", 10);
+		restRoom.put("2", 10);
+		restRoom.put("3", 10);
+		restRoom.put("4", 10);
 	}
 
 	/**
@@ -70,9 +68,9 @@ public class HotelAggregate implements Serializable {
 	 */
 	@CommandHandler(aggregateRootId = "hotelCode")
 	public ActReturn act(HotelCreateCmd cmd) {
-		if (restRoom.get(cmd.getRoomType()) > 0) {
+		if (restRoom.get(cmd.getRestType()) > 0) {
 			return ActReturn.builder().retCode(RetCode.SUCCESS)
-					.event(new HotelCreateEvent(cmd.getHotelCode(), cmd.getRoomType(), cmd.getSubNumber())).build();
+					.event(new HotelCreateEvent(cmd.getHotelCode(), cmd.getRestType(), cmd.getSubNumber())).build();
 		}
 		return ActReturn.builder().retCode(RetCode.FAIL).event(new HotelCreateFailEvent("There is no room left"))
 				.build();
@@ -80,7 +78,7 @@ public class HotelAggregate implements Serializable {
 
 	public void on(HotelCreateEvent event) {
 		this.bookedRoom.add(event.getSubNumber());
-		this.restRoom.put(event.getRoomType(), restRoom.get(event.getRoomType()) - 1);
+		this.restRoom.put(event.getRestType(), restRoom.get(event.getRestType()) - 1);
 	}
 
 	public void on(HotelCreateFailEvent event) {
@@ -103,9 +101,9 @@ public class HotelAggregate implements Serializable {
 
 	public void on(HotelCancelEvent event) {
 		bookedRoom.removeIf(v -> v.contains(event.getSubNumber()));
-		RoomType roomType = ConvertUtil.num2Enum(event.getSubNumber().split("@")[0]);
-		if (restRoom.containsKey(roomType)) {
-			restRoom.put(roomType, restRoom.get(roomType) + 1);
+		String s = event.getSubNumber().split("@")[0];
+		if (restRoom.containsKey(s)) {
+			restRoom.put(s, restRoom.get(s) + 1);
 		}
 	}
 

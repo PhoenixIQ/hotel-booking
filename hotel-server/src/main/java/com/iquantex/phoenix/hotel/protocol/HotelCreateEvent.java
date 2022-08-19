@@ -1,6 +1,5 @@
 package com.iquantex.phoenix.hotel.protocol;
 
-import com.iquantex.phoenix.hotel.enumType.RoomType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -17,7 +16,7 @@ public class HotelCreateEvent implements Serializable {
 
 	private String hotelCode;
 
-	private RoomType roomType;
+	private String restType;
 
 	private String subNumber;
 
