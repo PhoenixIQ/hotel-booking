@@ -12,6 +12,12 @@
     <artifactId>hotel-server</artifactId>
 
     <dependencies>
+        <!--内部依赖-->
+        <dependency>
+            <groupId>com.iquantex.phoenix</groupId>
+            <artifactId>protocol</artifactId>
+            <version>${revision}</version>
+        </dependency>
         <!-- spring-starter -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -76,12 +82,6 @@
                     <groupId>org.apache.kafka</groupId>
                 </exclusion>
             </exclusions>
-        </dependency>
-        <!--tools-->
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>${lombook.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.protobuf</groupId>

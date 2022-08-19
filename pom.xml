@@ -18,6 +18,7 @@
     <modules>
         <module>hotel-server</module>
         <module>order-service</module>
+        <module>protocol</module>
     </modules>
 
     <properties>
@@ -26,6 +27,14 @@
         <lombook.version>1.16.20</lombook.version>
         <proto.version>3.4.0</proto.version>
     </properties>
+    <dependencies>
+        <!--tools-->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombook.version}</version>
+        </dependency>
+    </dependencies>
 
     <dependencyManagement>
         <dependencies>

@@ -1,8 +1,8 @@
 spring:
   application:
-    name: hotel-bookings # 自定义服务名称
+    name: order-service # 自定义服务名称
   datasource:
-    url: jdbc:postgresql://127.0.0.1:5432/postgres?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+    url: jdbc:postgresql://127.0.0.1:5433/postgres?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
     username: pg12
     password: pg12
     driver-class-name: org.postgresql.Driver
@@ -13,12 +13,8 @@ spring:
         physical-strategy: org.springframework.boot.orm.jpa.hibernate.SpringPhysicalNamingStrategy
     database-platform: org.hibernate.dialect.PostgreSQL9Dialect
     show-sql: false
-
-# 关闭内嵌 Kafka
-embedded:
-  kafka:
-    enable: false
-
+server:
+  port: 8888
 quantex:
   phoenix:
     client:
@@ -34,11 +30,11 @@ quantex:
         type: kafka                       # mq类型
         address: 127.0.0.1:9092           # mq服务地址
         subscribe:
-          - topic: hotel-bookings
+          - topic: ${spring.application.name}
       event-store:
         driver-class-name: org.postgresql.Driver  # 数据库驱动
         data-sources:
-          - url: jdbc:postgresql://127.0.0.1:5432/postgres?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
+          - url: jdbc:postgresql://127.0.0.1:5433/postgres?useUnicode=true&characterEncoding=utf-8&verifyServerCertificate=false&useSSL=false&requireSSL=false
             username: pg12                  # 数据库账户
             password: pg12                  # 数据库密码
       license: Ig4knzdg6j9J6fYwoYtl31Kao+N1ErxmOpNjlTbtv46+hHF9PrxKcde5Tef3e0UcSWdRV7CHgNFEeYzeOOtd8upoDgSa2IHPJ11ZzQE/wJ6jCAuhx5BD+U0Em2MPTDhkAc3857aqECgRsO5yLTYXVhI3XiD3CfgrscTltUMOrVRthUqJqGZEqwlGct7P0XFxy50rP98pq3O6J+5kcQyVsOIA8g7ietKVnBqz/EWk73n+tzr3BZu63JYclZ6U6mR04r0j1i0u9eq0eIM2JpYi/5lP2bbNBj+RnQWpq6FBS16XVvvdmU5PpWSyMjyYhcugk+rltTeCjc7+ux+j8Gz0uu5+FSTQ6xeBDKqHUJm+alim07T/x4GRDG6Cteq4hWerW1udkos1fXIOhHUAbIt+xy3L4bVzzKizX9nAj3OU1wRl9NauUSNql9EnnLDINCf1zDoapSv4kctOnfN10kzvBohE8pyjTINFlmYS3Eb8J8q2Id82ogNezkM9nKm1Y8it/BOucojt81dKpnlPrwOpZZy7McZJP87GJuNykUgGWeEgeHakzv1jzu13S+//4ARhgbr4uCBO33c9WnUbskLTeP8Pvox0FVE+TzLOZzmuiJATU1bxP/yxuKsNzKrVzM/AiCIbsAoYEPG/h3I2ap7Pb1dKbhHDcTfNJgp4TxRillLgXTwz41N0e5Xoe26KrOdMd4tZb+uVkjlQa46UHXmLRv54zMO5wFzayKwZxS267MmF7GvkLtir8t5BFtvIHVn5YMTokJ4PnHjqcsmjqA6T9FQ5K1m/TktUuRpfhUiRxdGfQh+mU2nZGVRaSKW0sKVPkaKuFkc+eZK9Qq6MC5Rvrw==
@@ -46,9 +42,14 @@ quantex:
         enabled: true
     event-publish:
       event-task:
-        enabled: true
-        topic: hotel-event-pub
+        enabled: false
+    akka:
+      artery-canonical-port: 2552
     cluster:
       config:
-        seed-node: akka://hotel-bookings@127.0.0.1:2551
+        seed-node: akka://order-service@127.0.0.1:2552
       discovery-method: config
+
+# 订阅 event-pub
+subscribe:
+  topic: hotel-event-pub
