@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.iquantex.phoenix.client.PhoenixClient;
 import com.iquantex.phoenix.client.RpcResult;
-import com.iquantex.phoenix.hotel.enumType.RoomType;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelCmd;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelEvent;
 import com.iquantex.phoenix.hotel.protocol.HotelCancelFailEvent;
@@ -45,13 +44,9 @@ public class HotelController {
 
 	@PutMapping("/bookings/{hotelCode}/{roomType}")
 	public String bookings(@PathVariable String hotelCode, @PathVariable String roomType) {
-		// 转换房间类型
-		if (ConvertUtil.num2Enum(roomType) == null) {
-			return "Wrong room choice ";
-		}
 		// 生成预约号: roomType@UUID
 		String subNumber = roomType + "@" + UUID.randomUUID().toString();
-		HotelCreateCmd cmd = new HotelCreateCmd(hotelCode, ConvertUtil.num2Enum(roomType), subNumber);
+		HotelCreateCmd cmd = new HotelCreateCmd(hotelCode, roomType, subNumber);
 		Future<RpcResult> future = client.send(cmd, "hotel-bookings", UUID.randomUUID().toString());
 		try {
 			Object data = future.get(10, TimeUnit.SECONDS).getData();
@@ -97,9 +92,9 @@ public class HotelController {
 	@GetMapping("/queryPop")
 	public String queryRestRoom() {
 		try {
-			Map<RoomType, Integer> map = new HashMap<>();
-			repository.findAll().forEach(bookingStore -> map.put(RoomType.apply(bookingStore.getRoomType()),
-					bookingStore.getBookingsCount()));
+			Map<String, Integer> map = new HashMap<>();
+			repository.findAll()
+					.forEach(bookingStore -> map.put(bookingStore.getRoomType(), bookingStore.getBookingsCount()));
 			return new ObjectMapper().writeValueAsString(ConvertUtil.Map2Map(ConvertUtil.sortMap(map)));
 		}
 		catch (JsonProcessingException e) {
